@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        nodejs "node"
-    }
         stage('Build and Push docker image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
