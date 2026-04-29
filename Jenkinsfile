@@ -3,6 +3,7 @@ pipeline {
     tools {
         nodejs "node"
     }
+        stages {
         stage('Build and Push docker image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
@@ -24,3 +25,4 @@ pipeline {
             }
         }
     }
+}
