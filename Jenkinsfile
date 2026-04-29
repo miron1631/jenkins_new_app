@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     echo 'deploying Docker image to EC2 server...'
-                    def dockerCmd = "docker run -d -p 3000:3000 miron163/my_new_node_app:1.0"
+                    def dockerCmd = "docker run -d -p 3000:3080 miron163/my_new_node_app:1.0"
                     sshagent(['ec2-server-key']) {
                         sh "ssh -o StrictHostKeyChecking=no miron@89.169.186.237 ${dockerCmd}"
                     }
