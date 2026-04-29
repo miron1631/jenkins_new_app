@@ -3,16 +3,6 @@ pipeline {
     tools {
         nodejs "node"
     }
-        stage('Run tests') {
-            steps {
-                script {
-                    dir("app") {
-                        sh "npm install"
-                        sh "npm run test"
-                    }
-                }
-            }
-        }
         stage('Build and Push docker image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
@@ -22,20 +12,6 @@ pipeline {
                 }
             }
         }
-
-        stage('commit version update') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/miron1631/jenkins-exercises.git"
-                        sh 'git add .'
-                        sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:feature/solutions'
-                    }
-                }
-            }
-        }
-
         stage('Deploy Application') {
             steps {
                 script {
